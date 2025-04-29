@@ -361,6 +361,11 @@ export default function Home() {
               </div>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" asChild>
+                  <a href="https://hooptime.vercel.app/" target="_blank" rel="noopener noreferrer">
+                    Demo
+                  </a>
+                </Button>
+                <Button variant="outline" size="sm" asChild>
                   <a href="https://github.com/ahussein0/hooptime" target="_blank" rel="noopener noreferrer">
                     GitHub
                   </a>
