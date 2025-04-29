@@ -202,7 +202,6 @@ export default function Home() {
                   Performance Optimization
                 </span>
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Agile/Scrum</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Problem Solving</span>
               </div>
             </CardContent>
           </Card>
