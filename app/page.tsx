@@ -217,6 +217,23 @@ export default function Home() {
             <Card className="bg-white dark:bg-gray-900 shadow-sm">
               <CardContent className="p-6">
                 <div className="flex flex-col md:flex-row md:justify-between mb-2">
+                  <h4 className="font-semibold">Copado</h4>
+                  <span className="text-gray-500 dark:text-gray-400">May 2025 - Present</span>
+                </div>
+                <h5 className="text-gray-600 dark:text-gray-300 mb-2">Software Engineering Intern – Automation & DevOps</h5>
+                <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-1">
+                  <li>
+                    Built and optimized an internal automation pipeline using Google Apps Script (JavaScript) to transfer and format form submissions from Google Forms into structured Google Docs, reducing manual processing time by 90%.
+                  </li>
+                  <li>
+                    Designed and executed unit-level test cases to validate script reliability and edge case handling, improving reliability and maintainability.
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card className="bg-white dark:bg-gray-900 shadow-sm">
+              <CardContent className="p-6">
+                <div className="flex flex-col md:flex-row md:justify-between mb-2">
                   <h4 className="font-semibold">Ripplematch</h4>
                   <span className="text-gray-500 dark:text-gray-400">Janruary 2023- May 2023</span>
                 </div>
