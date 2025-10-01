@@ -11,7 +11,7 @@ import { useState } from "react"
 
 export default function Home() {
   const [emailCopied, setEmailCopied] = useState(false)
-  const email = "ahussein2204@gmail.com"
+  const email = "anasmhussein000@gmail.com"
 
   const handleEmailClick = () => {
     try {
@@ -178,7 +178,7 @@ export default function Home() {
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Docker</span>
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">CI/CD</span>
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">AWS</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Vercel/Netlify</span>
+                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Netlify</span>
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">npm/yarn</span>
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Linux</span>
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">APIs</span>
@@ -281,6 +281,34 @@ export default function Home() {
       <section id="projects" className="container py-16">
         <h2 className="text-2xl font-bold mb-8 text-center">Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card className="bg-white dark:bg-gray-900 shadow-sm">
+            <CardContent className="p-6">
+              <h3 className="font-semibold text-lg mb-2">Consensus</h3>
+              <p className="text-gray-700 dark:text-gray-300 mb-4">
+                Developed an AI Agent Network that simulates real population opinions by polling 100+ synthetic agents
+and aggregating results into agreement rates and confidence scores. First Place Hackathon :)
+              </p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Python</span>
+                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Multi-Agent</span>
+                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">HTML/CSS</span>
+                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">SixtyFour API</span>
+                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">OpenAI API</span>
+              </div>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" asChild>
+                  <a href="https://github.com/Cole-Gilbert/agentjam-hackathon" target="_blank" rel="noopener noreferrer">
+                    Demo
+                  </a>
+                </Button>
+                <Button variant="outline" size="sm" asChild>
+                  <a href="https://github.com/Cole-Gilbert/agentjam-hackathon" target="_blank" rel="noopener noreferrer">
+                    GitHub
+                  </a>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
           <Card className="bg-white dark:bg-gray-900 shadow-sm">
             <CardContent className="p-6">
               <h3 className="font-semibold text-lg mb-2">Ingrenius</h3>
