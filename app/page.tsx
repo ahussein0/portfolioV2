@@ -122,7 +122,7 @@ export default function Home() {
         <Card className="bg-white dark:bg-gray-900 shadow-sm">
           <CardContent className="p-6">
             <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-              My interests within the tech world include Data 🔍, AI/ML 🤖, and The Cloud ☁️. I'm driven by the desire to leverage technology to solve real-world problems and create a meaningful impact.
+              My interests within the tech world include Data 🔍, AI/ML 🤖, Web3, and The Cloud ☁️. I'm driven by the desire to leverage technology to solve real-world problems and create a meaningful impact.
             </p>
             <p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
               Outside the digital world, I game, I hoop, and I hit the trails.
