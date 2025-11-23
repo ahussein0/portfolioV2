@@ -220,7 +220,7 @@ export default function Home() {
                   <h4 className="font-semibold">Copado</h4>
                   <span className="text-gray-500 dark:text-gray-400">May 2025 - Present</span>
                 </div>
-                <h5 className="text-gray-600 dark:text-gray-300 mb-2">Software Engineer Intern – Automation & DevOps</h5>
+                <h5 className="text-gray-600 dark:text-gray-300 mb-2">Software Engineer</h5>
                 <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-1">
                   <li>
                    DevOps.
