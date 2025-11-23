@@ -223,10 +223,7 @@ export default function Home() {
                 <h5 className="text-gray-600 dark:text-gray-300 mb-2">Software Engineer Intern – Automation & DevOps</h5>
                 <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-1">
                   <li>
-                  Engineered and optimized an internal automation pipeline to programmatically ingest, transform, and format data from dynamic web forms into structured documentation, reducing manual processing time by 90%.
-                  </li>
-                  <li>
-                  Designed and executed a suite of unit-level test cases to validate script reliability, ensure robust error handling, and improve overall system maintainability.
+                   DevOps.
                   </li>
                 </ul>
               </CardContent>
