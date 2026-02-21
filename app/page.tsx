@@ -32,7 +32,7 @@ export default function Home() {
       <header className="sticky top-0 z-10 border-b bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm dark:border-gray-800">
         <div className="container flex h-16 items-center justify-between">
           <div className="text-xl font-semibold">
-            <AlternatingText texts={["Portfolio", "Howdy, I'm Anas!"]} interval={5000} />
+            <AlternatingText texts={["Portfolio", "yo, i'm Anas!"]} interval={5000} />
           </div>
           <nav className="hidden md:block">
             <ul className="flex gap-6">
@@ -92,7 +92,7 @@ export default function Home() {
           />
         </div>
         <h1 className="text-4xl font-bold mb-2">Anas Hussein</h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300 mb-6">Aspiring Software Engineer</p>
+        <p className="text-xl text-gray-600 dark:text-gray-300 mb-6">Software Engineer</p>
         <div className="flex gap-4">
           <Button variant="outline" size="icon" asChild>
             <a href="https://github.com/ahussein0" target="_blank" rel="noopener noreferrer">
@@ -122,10 +122,10 @@ export default function Home() {
         <Card className="bg-white dark:bg-gray-900 shadow-sm">
           <CardContent className="p-6">
             <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-              My interests within the tech world include Data 🔍, AI/ML 🤖, Web3, and The Cloud ☁️. I'm driven by the desire to leverage technology to solve real-world problems and create a meaningful impact.
+              generalist swe. wide range. no limits
             </p>
             <p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-              Outside the digital world, I game, I hoop, and I hit the trails.
+              outside the digital world, I game, I hoop, and I hit the trails
             </p>
           </CardContent>
         </Card>
@@ -158,6 +158,7 @@ export default function Home() {
               <div className="flex flex-wrap gap-2">
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Python</span>
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">C++/C</span>
+                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Swift</span>
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Node.js</span>
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Express</span>
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">MongoDB</span>
