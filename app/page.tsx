@@ -32,7 +32,7 @@ export default function Home() {
       <header className="sticky top-0 z-10 border-b bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm dark:border-gray-800">
         <div className="container flex h-16 items-center justify-between">
           <div className="text-xl font-semibold">
-            <AlternatingText texts={["Portfolio", "yo, i'm Anas!"]} interval={5000} />
+            <AlternatingText texts={["Portfolio", "Yo, I'm Anas!"]} interval={5000} />
           </div>
           <nav className="hidden md:block">
             <ul className="flex gap-6">
@@ -92,7 +92,7 @@ export default function Home() {
           />
         </div>
         <h1 className="text-4xl font-bold mb-2">Anas Hussein</h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300 mb-6">Software Engineer</p>
+        <p className="text-xl text-gray-600 dark:text-gray-300 mb-6">software engineer - generalist</p>
         <div className="flex gap-4">
           <Button variant="outline" size="icon" asChild>
             <a href="https://github.com/ahussein0" target="_blank" rel="noopener noreferrer">
