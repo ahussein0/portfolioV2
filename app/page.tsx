@@ -159,6 +159,7 @@ export default function Home() {
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Python</span>
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">C++/C</span>
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Swift</span>
+                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Go</span>
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Node.js</span>
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Express</span>
                 <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">MongoDB</span>
