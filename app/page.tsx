@@ -125,7 +125,7 @@ export default function Home() {
               building innovative solutions
             </p>
             <p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-              outside the digital world, I game, I hoop, and I hit the trails
+              outside the digital world, I hoop and hit the trails
             </p>
           </CardContent>
         </Card>
