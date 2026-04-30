@@ -226,9 +226,6 @@ export default function Home() {
                 </div>
                 <h5 className="text-gray-600 dark:text-gray-300 mb-2">Software Engineer</h5>
                 <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-1">
-                  <li>
-                   DevOps.
-                  </li>
                 </ul>
               </CardContent>
             </Card>
