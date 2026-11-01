@@ -56,12 +56,20 @@ export default function Home() {
     return result
   }, {} as Record<WindowId, number>), [windowOrder])
 
+  const stageIndex = (id: WindowId) => (Object.keys(windowMeta) as WindowId[])
+    .filter((windowId) => openWindows[windowId] && windowId !== activeWindow)
+    .indexOf(id)
+
   const focusWindow = (id: WindowId) => {
     setActiveWindow(id)
     setOpenWindows((current) => ({ ...current, [id]: true }))
     setWindowOrder((current) => [...current.filter((windowId) => windowId !== id), id])
   }
-  const closeWindow = (id: WindowId) => setOpenWindows((current) => ({ ...current, [id]: false }))
+  const closeWindow = (id: WindowId) => {
+    const nextActiveWindow = [...windowOrder].reverse().find((windowId) => windowId !== id && openWindows[windowId])
+    setOpenWindows((current) => ({ ...current, [id]: false }))
+    if (activeWindow === id && nextActiveWindow) setActiveWindow(nextActiveWindow)
+  }
   const updatePosition = (id: WindowId, position: Position) => setPositions((current) => ({ ...current, [id]: position }))
   const resetDesktop = () => {
     setPositions(initialPositions)
@@ -88,29 +96,29 @@ export default function Home() {
         <div className="os-menu-right"><span className="os-online"><span /> Available</span><ThemeToggle /><time>{time}</time></div>
       </header>
 
-      <div className="os-mobile-intro"><span className="os-mobile-kicker">Welcome to my desktop</span><h1>Ideas in.<br /><span>Products out.</span></h1><p>Open a window and look around. On desktop, you can drag everything wherever you want.</p></div>
+      <div className="os-mobile-intro"><span className="os-mobile-kicker">Welcome to my desktop</span><h1>Ideas in.<br /><span>Products out.</span></h1><p>Choose an app and bring it center stage. Everything else stays close by.</p></div>
 
       <div className="os-desktop">
-        <PortfolioWindow id="home" title={windowMeta.home.title} icon={<House />} position={positions.home} zIndex={zIndexes.home} isOpen={openWindows.home} isActive={activeWindow === "home"} onFocus={() => focusWindow("home")} onClose={() => closeWindow("home")} onPositionChange={(position) => updatePosition("home", position)} className="os-window-home">
+        <PortfolioWindow id="home" title={windowMeta.home.title} icon={<House />} position={positions.home} zIndex={zIndexes.home} isOpen={openWindows.home} isActive={activeWindow === "home"} stageIndex={stageIndex("home")} onFocus={() => focusWindow("home")} onClose={() => closeWindow("home")} onPositionChange={(position) => updatePosition("home", position)} className="os-window-home">
           <div className="os-hero">
             <div className="os-hero-copy"><span className="os-eyebrow">Software engineer</span><h1>Ideas in.<br /><span>Products out.</span></h1><p>I build useful software, experiment with AI agents, and turn ambitious ideas into products people enjoy using.</p><div className="os-hero-actions"><button type="button" className="os-primary-button" onClick={() => focusWindow("projects")}>Open projects <FolderGit2 aria-hidden="true" /></button><button type="button" className="os-secondary-button" onClick={() => focusWindow("contact")}>Let&apos;s talk <Mail aria-hidden="true" /></button></div></div>
             <div className="os-profile-wrap"><Image src="/profile-image.jpg" alt="Anas Hussein hiking in the mountains" width={420} height={315} className="os-profile-image" priority /><span className="os-photo-note">weekend mode ↗</span></div>
           </div>
         </PortfolioWindow>
 
-        <PortfolioWindow id="about" title={windowMeta.about.title} icon={<UserRound />} position={positions.about} zIndex={zIndexes.about} isOpen={openWindows.about} isActive={activeWindow === "about"} onFocus={() => focusWindow("about")} onClose={() => closeWindow("about")} onPositionChange={(position) => updatePosition("about", position)} className="os-window-about">
+        <PortfolioWindow id="about" title={windowMeta.about.title} icon={<UserRound />} position={positions.about} zIndex={zIndexes.about} isOpen={openWindows.about} isActive={activeWindow === "about"} stageIndex={stageIndex("about")} onFocus={() => focusWindow("about")} onClose={() => closeWindow("about")} onPositionChange={(position) => updatePosition("about", position)} className="os-window-about">
           <div className="os-about"><span className="os-file-label">ABOUT_ME.TXT</span><h2>Builder on screen.<br />Hooper off screen.</h2><p>I care about products that feel clear, fast, and a little unexpected. Outside the digital world, I hoop and hit the trails.</p><div className="os-skill-cloud" aria-label="Technical skills">{skills.map((skill, index) => <span key={skill} style={{ "--skill-index": index } as CSSProperties}>{skill}</span>)}</div></div>
         </PortfolioWindow>
 
-        <PortfolioWindow id="work" title={windowMeta.work.title} icon={<BriefcaseBusiness />} position={positions.work} zIndex={zIndexes.work} isOpen={openWindows.work} isActive={activeWindow === "work"} onFocus={() => focusWindow("work")} onClose={() => closeWindow("work")} onPositionChange={(position) => updatePosition("work", position)} className="os-window-work">
+        <PortfolioWindow id="work" title={windowMeta.work.title} icon={<BriefcaseBusiness />} position={positions.work} zIndex={zIndexes.work} isOpen={openWindows.work} isActive={activeWindow === "work"} stageIndex={stageIndex("work")} onFocus={() => focusWindow("work")} onClose={() => closeWindow("work")} onPositionChange={(position) => updatePosition("work", position)} className="os-window-work">
           <div className="os-timeline"><div className="os-section-heading"><div><span>CAREER.LOG</span><h2>Experience</h2></div><Code2 aria-hidden="true" /></div><article className="os-timeline-item current"><span className="os-timeline-dot" /><div><div className="os-timeline-meta"><strong>Software Engineer · Copado</strong><span>May 2025 — now</span></div><p>Building developer-facing software and helping teams ship with more confidence.</p></div></article><article className="os-timeline-item"><span className="os-timeline-dot" /><div><div className="os-timeline-meta"><strong>Leadership Development Intern · RippleMatch</strong><span>Jan — May 2023</span></div><p>Recognized as a top 1% intern and increased student sign-ups by 30% through a focused growth plan.</p></div></article><div className="os-education"><GraduationCap aria-hidden="true" /><div><strong>B.S. Computer Science</strong><span>University of Houston · 2025</span></div><div><strong>B.S. Public Health</strong><span>University of Houston · 2022</span></div></div></div>
         </PortfolioWindow>
 
-        <PortfolioWindow id="projects" title={windowMeta.projects.title} icon={<FolderGit2 />} position={positions.projects} zIndex={zIndexes.projects} isOpen={openWindows.projects} isActive={activeWindow === "projects"} onFocus={() => focusWindow("projects")} onClose={() => closeWindow("projects")} onPositionChange={(position) => updatePosition("projects", position)} className="os-window-projects">
+        <PortfolioWindow id="projects" title={windowMeta.projects.title} icon={<FolderGit2 />} position={positions.projects} zIndex={zIndexes.projects} isOpen={openWindows.projects} isActive={activeWindow === "projects"} stageIndex={stageIndex("projects")} onFocus={() => focusWindow("projects")} onClose={() => closeWindow("projects")} onPositionChange={(position) => updatePosition("projects", position)} className="os-window-projects">
           <div className="os-project-browser"><div className="os-section-heading"><div><span>PROJECTS.FOLDER</span><h2>Selected work</h2></div><span className="os-project-count">{projects.length} items</span></div><div className="os-project-grid">{projects.map((project) => <article className={`os-project-card ${project.color}`} key={project.name}><div className="os-project-top"><span>{project.label}</span><Maximize2 aria-hidden="true" /></div><h3>{project.name}</h3><p>{project.description}</p><div className="os-project-tech">{project.tech.map((item) => <span key={item}>{item}</span>)}</div><div className="os-project-links">{project.demo && <a href={project.demo} target="_blank" rel="noreferrer">Live <ExternalLink aria-hidden="true" /></a>}<a href={project.github} target="_blank" rel="noreferrer">Code <Github aria-hidden="true" /></a></div></article>)}</div></div>
         </PortfolioWindow>
 
-        <PortfolioWindow id="contact" title={windowMeta.contact.title} icon={<Mail />} position={positions.contact} zIndex={zIndexes.contact} isOpen={openWindows.contact} isActive={activeWindow === "contact"} onFocus={() => focusWindow("contact")} onClose={() => closeWindow("contact")} onPositionChange={(position) => updatePosition("contact", position)} className="os-window-contact">
+        <PortfolioWindow id="contact" title={windowMeta.contact.title} icon={<Mail />} position={positions.contact} zIndex={zIndexes.contact} isOpen={openWindows.contact} isActive={activeWindow === "contact"} stageIndex={stageIndex("contact")} onFocus={() => focusWindow("contact")} onClose={() => closeWindow("contact")} onPositionChange={(position) => updatePosition("contact", position)} className="os-window-contact">
           <div className="os-contact"><span className="os-contact-status"><span /> Connection ready</span><h2>Let&apos;s build something interesting.</h2><p>Always down to chat and connect.</p><div className="os-contact-actions"><a href="mailto:anasmhussein000@gmail.com"><Mail aria-hidden="true" /> Email me</a><button type="button" onClick={copyEmail}>{emailCopied ? "Copied!" : "Copy email"}</button></div><div className="os-social-links"><a href="https://github.com/ahussein0" target="_blank" rel="noreferrer"><Github aria-hidden="true" /> GitHub</a><a href="https://www.linkedin.com/in/anas-hussein1/" target="_blank" rel="noreferrer"><Linkedin aria-hidden="true" /> LinkedIn</a></div></div>
         </PortfolioWindow>
       </div>

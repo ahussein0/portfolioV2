@@ -14,6 +14,7 @@ interface PortfolioWindowProps {
   zIndex: number
   isOpen: boolean
   isActive: boolean
+  stageIndex?: number
   className?: string
   onFocus: () => void
   onClose: () => void
@@ -29,6 +30,7 @@ export function PortfolioWindow({
   zIndex,
   isOpen,
   isActive,
+  stageIndex,
   className = "",
   onFocus,
   onClose,
@@ -36,6 +38,11 @@ export function PortfolioWindow({
 }: PortfolioWindowProps) {
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (window.matchMedia("(max-width: 899px)").matches) return
+
+    if (stageIndex !== undefined) {
+      onFocus()
+      return
+    }
 
     const target = event.target as HTMLElement
     if (target.closest("button, a")) return
@@ -68,13 +75,14 @@ export function PortfolioWindow({
   const style = {
     "--window-x": `${position.x}px`,
     "--window-y": `${position.y}px`,
+    "--stage-index": stageIndex ?? 0,
     zIndex,
   } as CSSProperties
 
   return (
     <section
       id={id}
-      className={`os-window ${isActive ? "is-active" : ""} ${className}`}
+      className={`os-window ${isActive ? "is-active" : "is-stage-preview"} ${className}`}
       style={style}
       onPointerDown={onFocus}
       aria-label={`${title} window`}

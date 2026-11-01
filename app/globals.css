@@ -94,7 +94,7 @@ body {
   --os-blue: #77c8ff;
   --os-shadow: rgba(23, 24, 26, 0.92);
   position: relative;
-  min-height: 1460px;
+  min-height: 100vh;
   overflow: hidden;
   background: var(--os-mint);
   color: var(--os-ink);
@@ -164,7 +164,7 @@ body {
 .os-menu-right time { min-width: 58px; text-align: right; font-variant-numeric: tabular-nums; }
 .os-menu-right > button { width: 34px; height: 34px; border: 1.5px solid var(--os-ink); background: var(--os-paper); }
 
-.os-desktop { position: relative; min-height: 1460px; }
+.os-desktop { position: relative; min-height: 100vh; }
 .os-mobile-intro { display: none; }
 
 .os-window {
@@ -200,6 +200,83 @@ body {
 .os-window-work { width: min(600px, calc(100vw - 72px)); }
 .os-window-projects { width: min(820px, calc(100vw - 72px)); }
 .os-window-contact { width: min(410px, calc(100vw - 72px)); }
+
+@media (min-width: 900px) {
+  .os-window {
+    transition: left 260ms cubic-bezier(0.2, 0.8, 0.2, 1), top 260ms cubic-bezier(0.2, 0.8, 0.2, 1), width 260ms cubic-bezier(0.2, 0.8, 0.2, 1), height 260ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 180ms ease, opacity 180ms ease, transform 180ms ease;
+  }
+
+  .os-window.is-active {
+    position: fixed;
+    left: 28px;
+    top: 72px;
+    z-index: 50 !important;
+    width: calc(100vw - 388px);
+    max-width: 1040px;
+    max-height: calc(100vh - 166px);
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+
+  .os-window.is-active .os-window-titlebar {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    cursor: default;
+  }
+
+  .os-window.is-stage-preview {
+    position: fixed;
+    right: 24px;
+    left: auto;
+    top: calc(72px + (var(--stage-index) * 102px));
+    z-index: 40 !important;
+    width: 304px;
+    height: 82px;
+    opacity: 0.72;
+    box-shadow: 5px 5px 0 color-mix(in srgb, var(--os-shadow) 70%, transparent);
+    cursor: pointer;
+  }
+
+  .os-window.is-stage-preview:hover {
+    opacity: 1;
+    transform: translateX(-7px);
+    box-shadow: 8px 8px 0 var(--os-shadow);
+  }
+
+  .os-window.is-stage-preview .os-window-titlebar {
+    height: 100%;
+    border-bottom: 0;
+    cursor: pointer;
+    padding: 0 14px;
+  }
+
+  .os-window.is-stage-preview .os-window-title::after {
+    content: "Click to focus";
+    display: block;
+    margin-top: 4px;
+    color: color-mix(in srgb, var(--os-ink) 62%, transparent);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .os-window.is-stage-preview .os-window-title {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+  }
+
+  .os-window.is-stage-preview .os-window-icon {
+    grid-row: 1 / span 2;
+  }
+
+  .os-window.is-stage-preview .os-window-actions,
+  .os-window.is-stage-preview .os-window-content {
+    display: none;
+  }
+}
 
 .os-hero { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; align-items: center; padding: 34px; }
 .os-eyebrow, .os-file-label, .os-section-heading > div > span { display: block; margin-bottom: 10px; color: var(--os-coral); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
