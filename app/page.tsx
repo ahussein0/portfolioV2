@@ -1,454 +1,127 @@
 "use client"
 
 import Image from "next/image"
-import { Github, Linkedin, Mail } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { useEffect, useMemo, useState, type CSSProperties } from "react"
+import {
+  BriefcaseBusiness, Code2, ExternalLink, FolderGit2, Github, GraduationCap,
+  House, Linkedin, Mail, MapPin, Maximize2, Sparkles, UserRound,
+} from "lucide-react"
+
+import { PortfolioWindow } from "@/components/portfolio-window"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { CopyButton } from "@/components/copy-button"
-import { AlternatingText } from "@/components/alternating-text"
-import { useState } from "react"
+
+type WindowId = "home" | "about" | "work" | "projects" | "contact"
+type Position = { x: number; y: number }
+
+const initialPositions: Record<WindowId, Position> = {
+  home: { x: 48, y: 96 }, about: { x: 700, y: 132 }, work: { x: 92, y: 520 },
+  projects: { x: 540, y: 560 }, contact: { x: 880, y: 448 },
+}
+
+const windowMeta: Record<WindowId, { title: string; dockLabel: string; icon: typeof House }> = {
+  home: { title: "hello-anas.app", dockLabel: "Home", icon: House },
+  about: { title: "about-me.txt", dockLabel: "About", icon: UserRound },
+  work: { title: "experience.log", dockLabel: "Work", icon: BriefcaseBusiness },
+  projects: { title: "projects.folder", dockLabel: "Projects", icon: FolderGit2 },
+  contact: { title: "contact.app", dockLabel: "Contact", icon: Mail },
+}
+
+const skills = ["React", "Next.js", "TypeScript", "Python", "Go", "Node.js", "PostgreSQL", "MongoDB", "Docker", "AWS", "AI Agents", "REST APIs"]
+
+const projects = [
+  { name: "Consensus", label: "Hackathon winner", description: "An AI agent network that polls 100+ synthetic agents and turns their opinions into agreement rates and confidence scores.", tech: ["Python", "Multi-Agent", "OpenAI API"], demo: "https://github.com/Cole-Gilbert/agentjam-hackathon", github: "https://github.com/Cole-Gilbert/agentjam-hackathon", color: "coral" },
+  { name: "Ingrenius", label: "AI cooking companion", description: "Custom recipes generated from the ingredients, dietary preferences, and cuisine ideas already on your mind.", tech: ["Next.js", "TypeScript", "OpenAI API"], demo: "https://ingrenius.vercel.app/", github: "https://github.com/ahussein0/AIRecipe", color: "yellow" },
+  { name: "Footy Guess", label: "Daily sports game", description: "A full-stack football player guessing game built around blurred silhouettes and quick daily challenges.", tech: ["React", "Next.js", "MongoDB"], demo: "https://footy-guess.vercel.app/", github: "https://github.com/ahussein0/Footy-Guess", color: "violet" },
+  { name: "Hooptime", label: "Pickup basketball", description: "A real-time pickup basketball tracker for weekly runs, player signups, and payment tracking.", tech: ["React", "TypeScript", "Stripe"], demo: "https://hooptime.vercel.app/", github: "https://github.com/ahussein0/hooptime", color: "mint" },
+  { name: "Volunteer Match", label: "Community platform", description: "Matches volunteers to local opportunities using location, interests, and skills.", tech: ["React", "Express", "PostgreSQL"], github: "https://github.com/ahussein0/task4", color: "blue" },
+]
 
 export default function Home() {
+  const [positions, setPositions] = useState(initialPositions)
+  const [openWindows, setOpenWindows] = useState<Record<WindowId, boolean>>({ home: true, about: true, work: true, projects: true, contact: true })
+  const [activeWindow, setActiveWindow] = useState<WindowId>("home")
+  const [windowOrder, setWindowOrder] = useState<WindowId[]>(["work", "projects", "contact", "about", "home"])
+  const [time, setTime] = useState("")
   const [emailCopied, setEmailCopied] = useState(false)
-  const email = "anasmhussein000@gmail.com"
 
-  const handleEmailClick = () => {
-    try {
-      window.location.href = `mailto:${email}`
-    } catch (error) {
-      console.error("Failed to open mail client:", error)
-      // Fallback - copy to clipboard
-      navigator.clipboard.writeText(email).then(() => {
-        setEmailCopied(true)
-        setTimeout(() => setEmailCopied(false), 2000)
-      })
-    }
+  useEffect(() => {
+    const updateTime = () => setTime(new Intl.DateTimeFormat("en", { hour: "numeric", minute: "2-digit" }).format(new Date()))
+    updateTime()
+    const timer = window.setInterval(updateTime, 30_000)
+    return () => window.clearInterval(timer)
+  }, [])
+
+  const zIndexes = useMemo(() => windowOrder.reduce<Record<WindowId, number>>((result, id, index) => {
+    result[id] = index + 10
+    return result
+  }, {} as Record<WindowId, number>), [windowOrder])
+
+  const focusWindow = (id: WindowId) => {
+    setActiveWindow(id)
+    setOpenWindows((current) => ({ ...current, [id]: true }))
+    setWindowOrder((current) => [...current.filter((windowId) => windowId !== id), id])
+  }
+  const closeWindow = (id: WindowId) => setOpenWindows((current) => ({ ...current, [id]: false }))
+  const updatePosition = (id: WindowId, position: Position) => setPositions((current) => ({ ...current, [id]: position }))
+  const resetDesktop = () => {
+    setPositions(initialPositions)
+    setOpenWindows({ home: true, about: true, work: true, projects: true, contact: true })
+    setWindowOrder(["work", "projects", "contact", "about", "home"])
+    setActiveWindow("home")
+  }
+  const copyEmail = async () => {
+    await navigator.clipboard.writeText("anasmhussein000@gmail.com")
+    setEmailCopied(true)
+    window.setTimeout(() => setEmailCopied(false), 1800)
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 dark:text-gray-100">
-      {/* Header */}
-      <header className="sticky top-0 z-10 border-b bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm dark:border-gray-800">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="text-xl font-semibold">
-            <AlternatingText texts={["Portfolio", "Yo, I'm Anas!"]} interval={5000} />
-          </div>
-          <nav className="hidden md:block">
-            <ul className="flex gap-6">
-              <li>
-                <a href="#about" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
-                  About
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#skills"
-                  className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                >
-                  Skills
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#resume"
-                  className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                >
-                  Resume
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#projects"
-                  className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                >
-                  Projects
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#contact"
-                  className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                >
-                  Contact
-                </a>
-              </li>
-            </ul>
+    <main className="portfolio-os">
+      <div className="os-wallpaper" aria-hidden="true" />
+      <header className="os-menu-bar">
+        <div className="os-menu-left">
+          <button type="button" className="os-brand" onClick={() => focusWindow("home")}><Sparkles aria-hidden="true" /><span>AnasOS</span></button>
+          <nav aria-label="Portfolio sections">
+            {(Object.keys(windowMeta) as WindowId[]).map((id) => <button type="button" key={id} onClick={() => focusWindow(id)}>{windowMeta[id].dockLabel}</button>)}
           </nav>
-          <ThemeToggle />
         </div>
+        <div className="os-menu-right"><span className="os-online"><span /> Available</span><ThemeToggle /><time>{time}</time></div>
       </header>
 
-      {/* Hero Section */}
-      <section className="container py-20 flex flex-col items-center text-center">
-        <div className="mb-6 overflow-hidden rounded-full border-4 border-white dark:border-gray-800 shadow-lg">
-          <Image
-            src="/profile-image.jpg"
-            alt="Anas Hussein"
-            width={150}
-            height={150}
-            className="h-[150px] w-[150px] object-cover"
-            priority
-          />
-        </div>
-        <h1 className="text-4xl font-bold mb-2">Anas Hussein</h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300 mb-6">software engineer</p>
-        <div className="flex gap-4">
-          <Button variant="outline" size="icon" asChild>
-            <a href="https://github.com/ahussein0" target="_blank" rel="noopener noreferrer">
-              <Github className="h-5 w-5" />
-              <span className="sr-only">GitHub</span>
-            </a>
-          </Button>
-          <Button variant="outline" size="icon" asChild>
-            <a href="https://www.linkedin.com/in/anas-hussein1/" target="_blank" rel="noopener noreferrer">
-              <Linkedin className="h-5 w-5" />
-              <span className="sr-only">LinkedIn</span>
-            </a>
-          </Button>
-          <Button variant="outline" size="icon" onClick={handleEmailClick}>
-            <Mail className="h-5 w-5" />
-            <span className="sr-only">Email</span>
-          </Button>
-        </div>
-        {emailCopied && (
-          <div className="mt-2 text-sm text-green-600 dark:text-green-400">Email copied to clipboard!</div>
-        )}
-      </section>
+      <div className="os-mobile-intro"><span className="os-mobile-kicker">Welcome to my desktop</span><h1>Ideas in.<br /><span>Products out.</span></h1><p>Open a window and look around. On desktop, you can drag everything wherever you want.</p></div>
 
-      {/* About Section */}
-      <section id="about" className="container py-16">
-        <h2 className="text-2xl font-bold mb-8 text-center">About Me</h2>
-        <Card className="bg-white dark:bg-gray-900 shadow-sm">
-          <CardContent className="p-6">
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-              building innovative solutions
-            </p>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-              outside the digital world, I hoop and hit the trails
-            </p>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Skills Section */}
-      <section id="skills" className="container py-16">
-        <h2 className="text-2xl font-bold mb-8 text-center">Technical Skills</h2>
-        <div className="grid gap-8 md:grid-cols-2">
-          {/* Frontend Skills */}
-          <Card className="bg-white dark:bg-gray-900 shadow-sm">
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold mb-4">Frontend</h3>
-              <div className="flex flex-wrap gap-2">
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">React</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Next.js</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">TypeScript</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Tailwind CSS</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">HTML/CSS</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">JavaScript</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Swift</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Backend Skills */}
-          <Card className="bg-white dark:bg-gray-900 shadow-sm">
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold mb-4">Backend</h3>
-              <div className="flex flex-wrap gap-2">
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Python</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">C++/C</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Swift</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Go</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Node.js</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Express</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">MongoDB</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">PostgreSQL</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">GraphQL</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">REST APIs</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Authentication</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Serverless</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Tools & Others */}
-          <Card className="bg-white dark:bg-gray-900 shadow-sm">
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold mb-4">Tools & DevOps</h3>
-              <div className="flex flex-wrap gap-2">
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Git/GitHub</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Docker</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">CI/CD</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">AWS</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Netlify</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">npm/yarn</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Linux</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">APIs</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">SQL</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Other Skills */}
-          <Card className="bg-white dark:bg-gray-900 shadow-sm">
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold mb-4">Other Skills</h3>
-              <div className="flex flex-wrap gap-2">
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">UI/UX Design</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
-                  Testing (Jest/Cypress)
-                </span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
-                  Performance Optimization
-                </span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Agile/Scrum</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Prompt Engineering</span>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Resume Section */}
-      <section id="resume" className="container py-16">
-        <h2 className="text-2xl font-bold mb-8 text-center">Resume</h2>
-
-        {/* Experience */}
-        <div className="mb-12">
-          <h3 className="text-xl font-semibold mb-6">Experience</h3>
-          <div className="space-y-6">
-            <Card className="bg-white dark:bg-gray-900 shadow-sm">
-              <CardContent className="p-6">
-                <div className="flex flex-col md:flex-row md:justify-between mb-2">
-                  <h4 className="font-semibold">Copado</h4>
-                  <span className="text-gray-500 dark:text-gray-400">May 2025 - Present</span>
-                </div>
-                <h5 className="text-gray-600 dark:text-gray-300 mb-2">Software Engineer</h5>
-                <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-1">
-                </ul>
-              </CardContent>
-            </Card>
-            <Card className="bg-white dark:bg-gray-900 shadow-sm">
-              <CardContent className="p-6">
-                <div className="flex flex-col md:flex-row md:justify-between mb-2">
-                  <h4 className="font-semibold">Ripplematch</h4>
-                  <span className="text-gray-500 dark:text-gray-400">Janruary 2023- May 2023</span>
-                </div>
-                <h5 className="text-gray-600 dark:text-gray-300 mb-2">Leadership Development Intern</h5>
-                <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-1">
-                  <li>
-                    Recognized as a top 1% intern performer in a large cohort by RippleMatch Leadership; exceeded
-                    expectations in project delivery, leading to a notable enhancement in team productivity.
-                  </li>
-                  <li>
-                    Increased student sign-ups by 30% through a strategic growth plan that integrated social media
-                    campaigns, email outreach, and networking initiatives.
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
+      <div className="os-desktop">
+        <PortfolioWindow id="home" title={windowMeta.home.title} icon={<House />} position={positions.home} zIndex={zIndexes.home} isOpen={openWindows.home} isActive={activeWindow === "home"} onFocus={() => focusWindow("home")} onClose={() => closeWindow("home")} onPositionChange={(position) => updatePosition("home", position)} className="os-window-home">
+          <div className="os-hero">
+            <div className="os-hero-copy"><span className="os-eyebrow">Software engineer · Houston, TX</span><h1>Ideas in.<br /><span>Products out.</span></h1><p>I build useful software, experiment with AI agents, and turn ambitious ideas into products people enjoy using.</p><div className="os-hero-actions"><button type="button" className="os-primary-button" onClick={() => focusWindow("projects")}>Open projects <FolderGit2 aria-hidden="true" /></button><button type="button" className="os-secondary-button" onClick={() => focusWindow("contact")}>Let&apos;s talk <Mail aria-hidden="true" /></button></div></div>
+            <div className="os-profile-wrap"><Image src="/profile-image.jpg" alt="Anas Hussein hiking in the mountains" width={420} height={315} className="os-profile-image" priority /><span className="os-photo-note">weekend mode ↗</span></div>
           </div>
-        </div>
+        </PortfolioWindow>
 
-        {/* Education */}
-        <div>
-          <h3 className="text-xl font-semibold mb-6">Education</h3>
-          <Card className="bg-white dark:bg-gray-900 shadow-sm">
-            <CardContent className="p-6">
-              <div className="flex flex-col md:flex-row md:justify-between mb-2">
-                <h4 className="font-semibold">Bachelor of Science in Computer Science</h4>
-                <span className="text-gray-500 dark:text-gray-400">2023 - 2025</span>
-              </div>
-              <h5 className="text-gray-600 dark:text-gray-300">University of Houston</h5>
-            </CardContent>
-          </Card>
-          <Card className="bg-white dark:bg-gray-900 shadow-sm">
-            <CardContent className="p-6">
-              <div className="flex flex-col md:flex-row md:justify-between mb-2">
-                <h4 className="font-semibold">Bachelor of Science in Public Health Minor in Biology</h4>
-                <span className="text-gray-500 dark:text-gray-400">2019 - 2022</span>
-              </div>
-              <h5 className="text-gray-600 dark:text-gray-300">University of Houston</h5>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+        <PortfolioWindow id="about" title={windowMeta.about.title} icon={<UserRound />} position={positions.about} zIndex={zIndexes.about} isOpen={openWindows.about} isActive={activeWindow === "about"} onFocus={() => focusWindow("about")} onClose={() => closeWindow("about")} onPositionChange={(position) => updatePosition("about", position)} className="os-window-about">
+          <div className="os-about"><span className="os-file-label">ABOUT_ME.TXT</span><h2>Builder on screen.<br />Hooper off screen.</h2><p>I care about products that feel clear, fast, and a little unexpected. Outside the digital world, I hoop and hit the trails.</p><div className="os-skill-cloud" aria-label="Technical skills">{skills.map((skill, index) => <span key={skill} style={{ "--skill-index": index } as CSSProperties}>{skill}</span>)}</div></div>
+        </PortfolioWindow>
 
-      {/* Projects Section */}
-      <section id="projects" className="container py-16">
-        <h2 className="text-2xl font-bold mb-8 text-center">Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="bg-white dark:bg-gray-900 shadow-sm">
-            <CardContent className="p-6">
-              <h3 className="font-semibold text-lg mb-2">Consensus</h3>
-              <p className="text-gray-700 dark:text-gray-300 mb-4">
-                Developed an AI Agent Network that simulates real population opinions by polling 100+ synthetic agents
-and aggregating results into agreement rates and confidence scores. First Place Hackathon :)
-              </p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Python</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Multi-Agent</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">HTML/CSS</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">SixtyFour API</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">OpenAI API</span>
-              </div>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm" asChild>
-                  <a href="https://github.com/Cole-Gilbert/agentjam-hackathon" target="_blank" rel="noopener noreferrer">
-                    Demo
-                  </a>
-                </Button>
-                <Button variant="outline" size="sm" asChild>
-                  <a href="https://github.com/Cole-Gilbert/agentjam-hackathon" target="_blank" rel="noopener noreferrer">
-                    GitHub
-                  </a>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-white dark:bg-gray-900 shadow-sm">
-            <CardContent className="p-6">
-              <h3 className="font-semibold text-lg mb-2">Ingrenius</h3>
-              <p className="text-gray-700 dark:text-gray-300 mb-4">
-                AI-powered recipe generator using Next.js, React, TypeScript, and Tailwind CSS that creates custom
-                recipes based on user-provided ingredients, dietary preferences, and cuisine types.
-              </p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Next.js</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">React</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">TypeScript</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Tailwind CSS</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">OpenAI API</span>
-              </div>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm" asChild>
-                  <a href="https://ingrenius.vercel.app/" target="_blank" rel="noopener noreferrer">
-                    Demo
-                  </a>
-                </Button>
-                <Button variant="outline" size="sm" asChild>
-                  <a href="https://github.com/ahussein0/AIRecipe" target="_blank" rel="noopener noreferrer">
-                    GitHub
-                  </a>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+        <PortfolioWindow id="work" title={windowMeta.work.title} icon={<BriefcaseBusiness />} position={positions.work} zIndex={zIndexes.work} isOpen={openWindows.work} isActive={activeWindow === "work"} onFocus={() => focusWindow("work")} onClose={() => closeWindow("work")} onPositionChange={(position) => updatePosition("work", position)} className="os-window-work">
+          <div className="os-timeline"><div className="os-section-heading"><div><span>CAREER.LOG</span><h2>Experience</h2></div><Code2 aria-hidden="true" /></div><article className="os-timeline-item current"><span className="os-timeline-dot" /><div><div className="os-timeline-meta"><strong>Software Engineer · Copado</strong><span>May 2025 — now</span></div><p>Building developer-facing software and helping teams ship with more confidence.</p></div></article><article className="os-timeline-item"><span className="os-timeline-dot" /><div><div className="os-timeline-meta"><strong>Leadership Development Intern · RippleMatch</strong><span>Jan — May 2023</span></div><p>Recognized as a top 1% intern and increased student sign-ups by 30% through a focused growth plan.</p></div></article><div className="os-education"><GraduationCap aria-hidden="true" /><div><strong>B.S. Computer Science</strong><span>University of Houston · 2025</span></div><div><strong>B.S. Public Health</strong><span>University of Houston · 2022</span></div></div></div>
+        </PortfolioWindow>
 
-          <Card className="bg-white dark:bg-gray-900 shadow-sm">
-            <CardContent className="p-6">
-              <h3 className="font-semibold text-lg mb-2">Footy Guess</h3>
-              <p className="text-gray-700 dark:text-gray-300 mb-4">
-                A full-stack web app football player guessing game with blurred silhouettes for football fans.
-              </p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">React</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Next.js</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">MongoDB</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Tailwind CSS</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">REST API</span>
-              </div>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm" asChild>
-                  <a href="https://footy-guess.vercel.app/" target="_blank" rel="noopener noreferrer">
-                    Demo
-                  </a>
-                </Button>
-                <Button variant="outline" size="sm" asChild>
-                  <a href="https://github.com/ahussein0/Footy-Guess" target="_blank" rel="noopener noreferrer">
-                    GitHub
-                  </a>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+        <PortfolioWindow id="projects" title={windowMeta.projects.title} icon={<FolderGit2 />} position={positions.projects} zIndex={zIndexes.projects} isOpen={openWindows.projects} isActive={activeWindow === "projects"} onFocus={() => focusWindow("projects")} onClose={() => closeWindow("projects")} onPositionChange={(position) => updatePosition("projects", position)} className="os-window-projects">
+          <div className="os-project-browser"><div className="os-section-heading"><div><span>PROJECTS.FOLDER</span><h2>Selected work</h2></div><span className="os-project-count">{projects.length} items</span></div><div className="os-project-grid">{projects.map((project) => <article className={`os-project-card ${project.color}`} key={project.name}><div className="os-project-top"><span>{project.label}</span><Maximize2 aria-hidden="true" /></div><h3>{project.name}</h3><p>{project.description}</p><div className="os-project-tech">{project.tech.map((item) => <span key={item}>{item}</span>)}</div><div className="os-project-links">{project.demo && <a href={project.demo} target="_blank" rel="noreferrer">Live <ExternalLink aria-hidden="true" /></a>}<a href={project.github} target="_blank" rel="noreferrer">Code <Github aria-hidden="true" /></a></div></article>)}</div></div>
+        </PortfolioWindow>
 
-          <Card className="bg-white dark:bg-gray-900 shadow-sm">
-            <CardContent className="p-6">
-              <h3 className="font-semibold text-lg mb-2">Volunteer Management Application</h3>
-              <p className="text-gray-700 dark:text-gray-300 mb-4">
-                An app that matches users to events based on preferences such as location, skills.
-              </p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">React</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Node.js</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Express</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">PostgreSQL</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Geolocation API</span>
-              </div>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm" asChild>
-                  <a href="https://github.com/ahussein0/task4" target="_blank" rel="noopener noreferrer">
-                    GitHub
-                  </a>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+        <PortfolioWindow id="contact" title={windowMeta.contact.title} icon={<Mail />} position={positions.contact} zIndex={zIndexes.contact} isOpen={openWindows.contact} isActive={activeWindow === "contact"} onFocus={() => focusWindow("contact")} onClose={() => closeWindow("contact")} onPositionChange={(position) => updatePosition("contact", position)} className="os-window-contact">
+          <div className="os-contact"><span className="os-contact-status"><span /> Connection ready</span><h2>Let&apos;s build something interesting.</h2><p>Have a project, opportunity, or wonderfully weird idea? My inbox is open.</p><div className="os-contact-actions"><a href="mailto:anasmhussein000@gmail.com"><Mail aria-hidden="true" /> Email me</a><button type="button" onClick={copyEmail}>{emailCopied ? "Copied!" : "Copy email"}</button></div><div className="os-social-links"><a href="https://github.com/ahussein0" target="_blank" rel="noreferrer"><Github aria-hidden="true" /> GitHub</a><a href="https://www.linkedin.com/in/anas-hussein1/" target="_blank" rel="noreferrer"><Linkedin aria-hidden="true" /> LinkedIn</a><span><MapPin aria-hidden="true" /> Houston, TX</span></div></div>
+        </PortfolioWindow>
+      </div>
 
-          <Card className="bg-white dark:bg-gray-900 shadow-sm">
-            <CardContent className="p-6">
-              <h3 className="font-semibold text-lg mb-2">Hooptime</h3>
-              <p className="text-gray-700 dark:text-gray-300 mb-4">
-                A real-time pick-up basketball tracker that allows users to sign up for weekly basketball runs and
-                tracks payments.
-              </p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">React</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Typescript</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">Stripe Payments</span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">MongoDB</span>
-              </div>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm" asChild>
-                  <a href="https://hooptime.vercel.app/" target="_blank" rel="noopener noreferrer">
-                    Demo
-                  </a>
-                </Button>
-                <Button variant="outline" size="sm" asChild>
-                  <a href="https://github.com/ahussein0/hooptime" target="_blank" rel="noopener noreferrer">
-                    GitHub
-                  </a>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="container py-16">
-        <h2 className="text-2xl font-bold mb-8 text-center">Get In Touch</h2>
-        <Card className="max-w-md mx-auto bg-white dark:bg-gray-900 shadow-sm">
-          <CardContent className="p-6">
-            <div className="flex flex-col items-center space-y-4">
-              <p className="text-gray-700 dark:text-gray-300 text-center">
-                Feel free to reach out for collaborations or just a friendly chat.
-              </p>
-              <div className="flex gap-4 mt-4">
-                <CopyButton value={email} label="Copy email address">
-                  <Mail className="h-4 w-4 mr-2" />
-                  Email Me
-                </CopyButton>
-                <Button variant="outline" asChild>
-                  <a href="https://www.linkedin.com/in/anas-hussein1/" target="_blank" rel="noopener noreferrer">
-                    <Linkedin className="h-4 w-4 mr-2" />
-                    LinkedIn
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t py-8 dark:border-gray-800">
-        <div className="container text-center text-gray-500 dark:text-gray-400">
-          <p>© {new Date().getFullYear()} Anas Hussein. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
+      <nav className="os-dock" aria-label="Open portfolio windows">
+        {(Object.keys(windowMeta) as WindowId[]).map((id) => {
+          const Icon = windowMeta[id].icon
+          return <button type="button" key={id} className={activeWindow === id && openWindows[id] ? "is-active" : ""} onClick={() => focusWindow(id)} aria-label={`Open ${windowMeta[id].dockLabel}`}><Icon aria-hidden="true" /><span>{windowMeta[id].dockLabel}</span>{openWindows[id] && <i aria-hidden="true" />}</button>
+        })}
+        <span className="os-dock-divider" /><button type="button" onClick={resetDesktop} aria-label="Reset window layout"><Maximize2 aria-hidden="true" /><span>Reset</span></button>
+      </nav>
+    </main>
   )
 }
