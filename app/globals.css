@@ -317,7 +317,7 @@ body {
 .os-profile-image { display: block; width: 100%; aspect-ratio: 4 / 3; border: 2px solid var(--os-ink); object-fit: cover; }
 
 .os-about { padding: 28px; }
-.os-about h2, .os-section-heading h2, .os-contact h2 { margin: 0; font-size: 30px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; }
+.os-section-heading h2 { margin: 0; font-size: 30px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; }
 .os-about > p, .os-contact > p { margin: 15px 0 0; color: color-mix(in srgb, var(--os-ink) 74%, transparent); font-size: 14px; line-height: 1.6; }
 .os-skill-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
 .os-skill-cloud span { border: 1.5px solid var(--os-ink); border-radius: 999px; background: color-mix(in srgb, var(--os-yellow) calc(20% + var(--skill-index) * 2%), var(--os-paper)); padding: 7px 10px; font-size: 11px; font-weight: 650; transition: transform 150ms ease, background 150ms ease; }
