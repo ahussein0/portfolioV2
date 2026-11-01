@@ -239,7 +239,8 @@ body {
   }
 
   .os-desktop.is-overview .os-window-contact {
-    grid-column: 2;
+    grid-column: 1 / -1;
+    height: 196px;
   }
 
   .os-desktop.is-overview .os-window-content {
@@ -251,6 +252,48 @@ body {
   .os-desktop.is-overview .os-window-home .os-window-content {
     width: 100%;
     zoom: 1;
+  }
+
+  .os-desktop.is-overview .os-window-contact .os-window-content {
+    width: 100%;
+    zoom: 1;
+  }
+
+  .os-desktop.is-overview .os-window-contact .os-contact {
+    display: grid;
+    min-height: 154px;
+    grid-template-columns: 1fr 1.2fr 0.8fr;
+    grid-template-areas:
+      "actions status social"
+      "actions message social";
+    gap: 8px 34px;
+    align-items: center;
+    padding: 24px 30px;
+  }
+
+  .os-desktop.is-overview .os-window-contact .os-contact-status {
+    grid-area: status;
+    margin: 0;
+  }
+
+  .os-desktop.is-overview .os-window-contact .os-contact > p {
+    grid-area: message;
+    margin: 0;
+    font-size: 16px;
+  }
+
+  .os-desktop.is-overview .os-window-contact .os-contact-actions {
+    grid-area: actions;
+    margin: 0;
+  }
+
+  .os-desktop.is-overview .os-window-contact .os-social-links {
+    grid-area: social;
+    justify-content: center;
+    margin: 0;
+    border-top: 0;
+    border-left: 1px dashed color-mix(in srgb, var(--os-ink) 35%, transparent);
+    padding: 16px 0 16px 28px;
   }
 
   .os-desktop.is-overview .os-window-home .os-hero {
