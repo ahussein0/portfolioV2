@@ -40,6 +40,7 @@ export default function Home() {
   const [positions, setPositions] = useState(initialPositions)
   const [openWindows, setOpenWindows] = useState<Record<WindowId, boolean>>({ home: true, about: true, work: true, projects: true, contact: true })
   const [activeWindow, setActiveWindow] = useState<WindowId>("home")
+  const [isOverview, setIsOverview] = useState(true)
   const [windowOrder, setWindowOrder] = useState<WindowId[]>(["work", "projects", "contact", "about", "home"])
   const [time, setTime] = useState("")
   const [emailCopied, setEmailCopied] = useState(false)
@@ -62,6 +63,7 @@ export default function Home() {
 
   const focusWindow = (id: WindowId) => {
     setActiveWindow(id)
+    setIsOverview(false)
     setOpenWindows((current) => ({ ...current, [id]: true }))
     setWindowOrder((current) => [...current.filter((windowId) => windowId !== id), id])
   }
@@ -76,6 +78,7 @@ export default function Home() {
     setOpenWindows({ home: true, about: true, work: true, projects: true, contact: true })
     setWindowOrder(["work", "projects", "contact", "about", "home"])
     setActiveWindow("home")
+    setIsOverview(true)
   }
   const copyEmail = async () => {
     await navigator.clipboard.writeText("anasmhussein000@gmail.com")
@@ -88,7 +91,7 @@ export default function Home() {
       <div className="os-wallpaper" aria-hidden="true" />
       <header className="os-menu-bar">
         <div className="os-menu-left">
-          <button type="button" className="os-brand" onClick={() => focusWindow("home")}><Sparkles aria-hidden="true" /><span>AnasOS</span></button>
+          <button type="button" className="os-brand" onClick={resetDesktop}><Sparkles aria-hidden="true" /><span>AnasOS</span></button>
           <nav aria-label="Portfolio sections">
             {(Object.keys(windowMeta) as WindowId[]).map((id) => <button type="button" key={id} onClick={() => focusWindow(id)}>{windowMeta[id].dockLabel}</button>)}
           </nav>
@@ -96,9 +99,9 @@ export default function Home() {
         <div className="os-menu-right"><span className="os-online"><span /> Available</span><ThemeToggle /><time>{time}</time></div>
       </header>
 
-      <div className="os-mobile-intro"><span className="os-mobile-kicker">Welcome to my desktop</span><h1>Ideas in.<br /><span>Products out.</span></h1><p>Choose an app and bring it center stage. Everything else stays close by.</p></div>
+      <div className="os-mobile-intro"><span className="os-mobile-kicker">Welcome to my desktop</span><h1>Ideas in.<br /><span>Products out.</span></h1><p>See everything at a glance. Choose a window to bring it into focus.</p></div>
 
-      <div className="os-desktop">
+      <div className={`os-desktop ${isOverview ? "is-overview" : "is-focused"}`}>
         <PortfolioWindow id="home" title={windowMeta.home.title} icon={<House />} position={positions.home} zIndex={zIndexes.home} isOpen={openWindows.home} isActive={activeWindow === "home"} stageIndex={stageIndex("home")} onFocus={() => focusWindow("home")} onClose={() => closeWindow("home")} onPositionChange={(position) => updatePosition("home", position)} className="os-window-home">
           <div className="os-hero">
             <div className="os-hero-copy"><span className="os-eyebrow">Software engineer</span><h1>Ideas in.<br /><span>Products out.</span></h1><p>I build useful software, experiment with AI agents, and turn ambitious ideas into products people enjoy using.</p><div className="os-hero-actions"><button type="button" className="os-primary-button" onClick={() => focusWindow("projects")}>Open projects <FolderGit2 aria-hidden="true" /></button><button type="button" className="os-secondary-button" onClick={() => focusWindow("contact")}>Let&apos;s talk <Mail aria-hidden="true" /></button></div></div>
@@ -128,7 +131,7 @@ export default function Home() {
           const Icon = windowMeta[id].icon
           return <button type="button" key={id} className={activeWindow === id && openWindows[id] ? "is-active" : ""} onClick={() => focusWindow(id)} aria-label={`Open ${windowMeta[id].dockLabel}`}><Icon aria-hidden="true" /><span>{windowMeta[id].dockLabel}</span>{openWindows[id] && <i aria-hidden="true" />}</button>
         })}
-        <span className="os-dock-divider" /><button type="button" onClick={resetDesktop} aria-label="Reset window layout"><Maximize2 aria-hidden="true" /><span>Reset</span></button>
+        <span className="os-dock-divider" /><button type="button" onClick={resetDesktop} aria-label="Show all apps"><Maximize2 aria-hidden="true" /><span>All apps</span></button>
       </nav>
     </main>
   )
