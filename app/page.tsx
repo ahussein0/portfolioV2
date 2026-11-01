@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useEffect, useMemo, useState, type CSSProperties } from "react"
+import { useMemo, useState, type CSSProperties } from "react"
 import {
   ArrowDownRight, BriefcaseBusiness, Code2, ExternalLink, FolderGit2, Github, GraduationCap,
   House, Linkedin, Mail, Maximize2, Sparkles, UserRound,
@@ -42,15 +42,7 @@ export default function Home() {
   const [activeWindow, setActiveWindow] = useState<WindowId>("home")
   const [isOverview, setIsOverview] = useState(true)
   const [windowOrder, setWindowOrder] = useState<WindowId[]>(["work", "projects", "contact", "about", "home"])
-  const [time, setTime] = useState("")
   const [emailCopied, setEmailCopied] = useState(false)
-
-  useEffect(() => {
-    const updateTime = () => setTime(new Intl.DateTimeFormat("en", { hour: "numeric", minute: "2-digit" }).format(new Date()))
-    updateTime()
-    const timer = window.setInterval(updateTime, 30_000)
-    return () => window.clearInterval(timer)
-  }, [])
 
   const zIndexes = useMemo(() => windowOrder.reduce<Record<WindowId, number>>((result, id, index) => {
     result[id] = index + 10
@@ -110,7 +102,7 @@ export default function Home() {
             {(Object.keys(windowMeta) as WindowId[]).map((id) => <button type="button" key={id} onClick={() => focusWindow(id)}>{windowMeta[id].dockLabel}</button>)}
           </nav>
         </div>
-        <div className="os-menu-right"><span className="os-online"><span /> Available</span><ThemeToggle /><time>{time}</time></div>
+        <div className="os-menu-right"><ThemeToggle /></div>
       </header>
 
       <div className="os-mobile-intro"><span className="os-mobile-kicker">Welcome to my desktop</span><p>See everything at a glance. Choose a window to bring it into focus.</p></div>

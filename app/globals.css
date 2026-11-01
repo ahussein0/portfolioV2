@@ -159,9 +159,7 @@ body {
 
 .os-brand:hover, .os-menu-left nav button:hover { background: color-mix(in srgb, var(--os-ink) 10%, transparent); transform: translateY(-1px); }
 .os-brand svg { width: 17px; height: 17px; color: var(--os-coral); }
-.os-online { display: inline-flex; align-items: center; gap: 6px; }
-.os-online > span, .os-contact-status > span { width: 8px; height: 8px; border-radius: 50%; background: #1bbc76; box-shadow: 0 0 0 4px rgba(27, 188, 118, 0.16); }
-.os-menu-right time { min-width: 58px; text-align: right; font-variant-numeric: tabular-nums; }
+.os-contact-status > span { width: 8px; height: 8px; border-radius: 50%; background: #1bbc76; box-shadow: 0 0 0 4px rgba(27, 188, 118, 0.16); }
 .os-menu-right > button { width: 34px; height: 34px; border: 1.5px solid var(--os-ink); background: var(--os-paper); }
 
 .os-desktop { position: relative; min-height: 100vh; }
@@ -463,7 +461,7 @@ body {
 @media (max-width: 899px) {
   .portfolio-os { min-height: 100vh; overflow: visible; padding-bottom: 100px; }
   .os-menu-bar { position: sticky; }
-  .os-menu-left nav, .os-online { display: none; }
+  .os-menu-left nav { display: none; }
   .os-mobile-intro { display: block; padding: 48px 20px 20px; }
   .os-mobile-intro h1 { margin: 10px 0 17px; font-size: clamp(48px, 14vw, 72px); }
   .os-mobile-intro p { max-width: 520px; line-height: 1.6; }
@@ -487,7 +485,6 @@ body {
 @media (max-width: 520px) {
   .os-menu-bar { padding: 0 10px; }
   .os-menu-right { gap: 8px; }
-  .os-menu-right time { display: none; }
   .os-mobile-intro { padding-inline: 16px; }
   .os-desktop { padding: 12px; }
   .os-hero, .os-about, .os-timeline, .os-project-browser, .os-contact { padding: 19px; }
