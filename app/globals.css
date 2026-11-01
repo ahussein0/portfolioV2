@@ -434,10 +434,11 @@ body {
 .os-contact-actions button { background: var(--os-paper); color: var(--os-ink); }
 .os-contact-actions svg { width: 14px; height: 14px; }
 .os-social-links { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; margin-top: 20px; padding-top: 24px; border-top: 1px dashed color-mix(in srgb, var(--os-ink) 35%, transparent); }
-.os-social-button { display: inline-flex; min-height: 38px; align-items: center; gap: 6px; border: 1.5px solid var(--os-ink); border-radius: 7px; padding: 8px 11px; font-size: 10px; font-weight: 750; box-shadow: 2px 2px 0 var(--os-ink); transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease; }
+.os-social-button { display: inline-flex; min-height: 38px; align-items: center; gap: 6px; border: 1.5px solid var(--os-ink); border-radius: 7px; padding: 8px 11px; font-size: 10px; font-weight: 750; box-shadow: 2px 2px 0 var(--os-ink); transform: translateY(0) scale(1); transform-origin: center bottom; transition: transform 180ms cubic-bezier(.2,.8,.2,1), box-shadow 180ms ease, filter 180ms ease; will-change: transform; }
 .os-social-button.github { background: var(--os-ink); color: var(--os-paper); }
 .os-social-button.linkedin { background: color-mix(in srgb, var(--os-blue) 72%, var(--os-paper)); color: var(--os-ink); }
-.os-social-button:hover { transform: translate(-2px, -3px); box-shadow: 4px 5px 0 var(--os-ink); }
+.os-social-button:hover { transform: translateY(-6px) scale(1.04); box-shadow: 4px 8px 0 var(--os-ink); filter: brightness(1.06); }
+.os-social-button:active { transform: translateY(-2px) scale(1.01); box-shadow: 2px 4px 0 var(--os-ink); }
 .os-linkedin-link { position: relative; display: inline-flex; }
 .os-connect-note { position: absolute; left: 50%; bottom: calc(100% + 6px); display: inline-flex; align-items: center; gap: 3px; transform: translateX(-50%) rotate(-2deg); white-space: nowrap; color: var(--os-coral); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 9px; font-weight: 800; text-transform: uppercase; }
 .os-connect-note svg { width: 13px; height: 13px; }
