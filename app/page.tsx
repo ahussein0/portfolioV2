@@ -99,12 +99,12 @@ export default function Home() {
         <div className="os-menu-right"><span className="os-online"><span /> Available</span><ThemeToggle /><time>{time}</time></div>
       </header>
 
-      <div className="os-mobile-intro"><span className="os-mobile-kicker">Welcome to my desktop</span><h1>Ideas in.<br /><span>Products out.</span></h1><p>See everything at a glance. Choose a window to bring it into focus.</p></div>
+      <div className="os-mobile-intro"><span className="os-mobile-kicker">Welcome to my desktop</span><p>See everything at a glance. Choose a window to bring it into focus.</p></div>
 
       <div className={`os-desktop ${isOverview ? "is-overview" : "is-focused"}`}>
         <PortfolioWindow id="home" title={windowMeta.home.title} icon={<House />} position={positions.home} zIndex={zIndexes.home} isOpen={openWindows.home} isActive={activeWindow === "home"} stageIndex={stageIndex("home")} onFocus={() => focusWindow("home")} onClose={() => closeWindow("home")} onPositionChange={(position) => updatePosition("home", position)} className="os-window-home">
           <div className="os-hero">
-            <div className="os-hero-copy"><span className="os-eyebrow">Software engineer</span><h1>Ideas in.<br /><span>Products out.</span></h1><p>I build useful software, experiment with AI agents, and turn ambitious ideas into products people enjoy using.</p><div className="os-hero-actions"><button type="button" className="os-primary-button" onClick={() => focusWindow("projects")}>Open projects <FolderGit2 aria-hidden="true" /></button><button type="button" className="os-secondary-button" onClick={() => focusWindow("contact")}>Let&apos;s talk <Mail aria-hidden="true" /></button></div></div>
+            <div className="os-hero-copy"><span className="os-eyebrow">Software engineer</span><p>I build useful software, experiment with AI agents, and turn ambitious ideas into products people enjoy using.</p><div className="os-hero-actions"><button type="button" className="os-primary-button" onClick={() => focusWindow("projects")}>Open projects <FolderGit2 aria-hidden="true" /></button><button type="button" className="os-secondary-button" onClick={() => focusWindow("contact")}>Let&apos;s talk <Mail aria-hidden="true" /></button></div></div>
             <div className="os-profile-wrap"><Image src="/profile-image.jpg" alt="Anas Hussein hiking in the mountains" width={420} height={315} className="os-profile-image" priority /><span className="os-photo-note">weekend mode ↗</span></div>
           </div>
         </PortfolioWindow>
