@@ -66,6 +66,9 @@ export default function Home() {
     setIsOverview(false)
     setOpenWindows((current) => ({ ...current, [id]: true }))
     setWindowOrder((current) => [...current.filter((windowId) => windowId !== id), id])
+    if (window.matchMedia("(max-width: 899px)").matches) {
+      window.requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }))
+    }
   }
   const closeWindow = (id: WindowId) => {
     const nextActiveWindow = [...windowOrder].reverse().find((windowId) => windowId !== id && openWindows[windowId])
@@ -79,6 +82,9 @@ export default function Home() {
     setWindowOrder(["work", "projects", "contact", "about", "home"])
     setActiveWindow("home")
     setIsOverview(true)
+    if (window.matchMedia("(max-width: 899px)").matches) {
+      window.requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "smooth" }))
+    }
   }
   const copyEmail = async () => {
     await navigator.clipboard.writeText("anasmhussein000@gmail.com")
@@ -129,7 +135,7 @@ export default function Home() {
       <nav className="os-dock" aria-label="Open portfolio windows">
         {(Object.keys(windowMeta) as WindowId[]).map((id) => {
           const Icon = windowMeta[id].icon
-          return <button type="button" key={id} className={activeWindow === id && openWindows[id] ? "is-active" : ""} onClick={() => focusWindow(id)} aria-label={`Open ${windowMeta[id].dockLabel}`}><Icon aria-hidden="true" /><span>{windowMeta[id].dockLabel}</span>{openWindows[id] && <i aria-hidden="true" />}</button>
+          return <button type="button" key={id} className={activeWindow === id && openWindows[id] ? "is-active" : ""} onClick={() => focusWindow(id)} aria-label={`Open ${windowMeta[id].dockLabel}`} aria-current={activeWindow === id && openWindows[id] ? "true" : undefined}><Icon aria-hidden="true" /><span>{windowMeta[id].dockLabel}</span>{openWindows[id] && <i aria-hidden="true" />}</button>
         })}
         <span className="os-dock-divider" /><button type="button" onClick={resetDesktop} aria-label="Show all apps"><Maximize2 aria-hidden="true" /><span>All apps</span></button>
       </nav>

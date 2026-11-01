@@ -420,6 +420,9 @@ body {
   .os-mobile-kicker { font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; }
   .os-desktop { display: grid; min-height: auto; gap: 18px; padding: 16px; }
   .os-window, .os-window-home, .os-window-about, .os-window-work, .os-window-projects, .os-window-contact { position: relative; inset: auto; width: 100%; opacity: 1; box-shadow: 5px 5px 0 var(--os-shadow); }
+  .os-window { scroll-margin-top: 64px; }
+  .os-window.is-active { outline: 3px solid var(--os-coral); outline-offset: 3px; box-shadow: 8px 8px 0 var(--os-shadow); }
+  .os-window.is-active .os-window-titlebar { background: color-mix(in srgb, var(--os-yellow) 68%, var(--os-coral)); }
   .os-window-titlebar { cursor: default; }
   .os-window-actions { display: none; }
   .os-hero { grid-template-columns: 1fr; padding: 24px; }
