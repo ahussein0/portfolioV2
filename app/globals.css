@@ -248,6 +248,28 @@ body {
     pointer-events: none;
   }
 
+  .os-desktop.is-overview .os-window-home .os-window-content {
+    width: 100%;
+    zoom: 1;
+  }
+
+  .os-desktop.is-overview .os-window-home .os-hero {
+    height: 244px;
+    grid-template-columns: minmax(0, 1fr) minmax(250px, 0.8fr);
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .os-desktop.is-overview .os-window-home .os-profile-wrap {
+    align-self: stretch;
+    overflow: hidden;
+  }
+
+  .os-desktop.is-overview .os-window-home .os-profile-image {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
   .os-desktop.is-overview .os-window-titlebar {
     cursor: pointer;
   }
@@ -313,7 +335,7 @@ body {
 .os-secondary-button { background: var(--os-paper); color: var(--os-ink); }
 .os-primary-button:hover, .os-secondary-button:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--os-ink); }
 .os-primary-button svg, .os-secondary-button svg { width: 16px; height: 16px; }
-.os-profile-wrap { position: relative; transform: rotate(2deg); }
+.os-profile-wrap { position: relative; }
 .os-profile-image { display: block; width: 100%; aspect-ratio: 4 / 3; border: 2px solid var(--os-ink); object-fit: cover; }
 
 .os-about { padding: 28px; }
