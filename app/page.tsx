@@ -110,7 +110,7 @@ export default function Home() {
         </PortfolioWindow>
 
         <PortfolioWindow id="about" title={windowMeta.about.title} icon={<UserRound />} position={positions.about} zIndex={zIndexes.about} isOpen={openWindows.about} isActive={activeWindow === "about"} stageIndex={stageIndex("about")} onFocus={() => focusWindow("about")} onClose={() => closeWindow("about")} onPositionChange={(position) => updatePosition("about", position)} className="os-window-about">
-          <div className="os-about"><span className="os-file-label">ABOUT_ME.TXT</span><h2>Builder on screen.<br />Hooper off screen.</h2><p>I care about products that feel clear, fast, and a little unexpected. Outside the digital world, I hoop and hit the trails.</p><div className="os-skill-cloud" aria-label="Technical skills">{skills.map((skill, index) => <span key={skill} style={{ "--skill-index": index } as CSSProperties}>{skill}</span>)}</div></div>
+          <div className="os-about"><span className="os-file-label">ABOUT_ME.TXT</span><p>I care about products that feel clear, fast, and a little unexpected. Outside the digital world, I hoop and hit the trails.</p><div className="os-skill-cloud" aria-label="Technical skills">{skills.map((skill, index) => <span key={skill} style={{ "--skill-index": index } as CSSProperties}>{skill}</span>)}</div></div>
         </PortfolioWindow>
 
         <PortfolioWindow id="work" title={windowMeta.work.title} icon={<BriefcaseBusiness />} position={positions.work} zIndex={zIndexes.work} isOpen={openWindows.work} isActive={activeWindow === "work"} stageIndex={stageIndex("work")} onFocus={() => focusWindow("work")} onClose={() => closeWindow("work")} onPositionChange={(position) => updatePosition("work", position)} className="os-window-work">
