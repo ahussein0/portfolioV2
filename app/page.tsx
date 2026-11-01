@@ -71,9 +71,17 @@ export default function Home() {
     }
   }
   const closeWindow = (id: WindowId) => {
-    const nextActiveWindow = [...windowOrder].reverse().find((windowId) => windowId !== id && openWindows[windowId])
+    const remainingWindows = [...windowOrder].reverse().filter((windowId) => windowId !== id && openWindows[windowId])
+    if (remainingWindows.length === 0) {
+      setPositions(initialPositions)
+      setOpenWindows({ home: true, about: true, work: true, projects: true, contact: true })
+      setWindowOrder(["work", "projects", "contact", "about", "home"])
+      setActiveWindow("home")
+      setIsOverview(true)
+      return
+    }
     setOpenWindows((current) => ({ ...current, [id]: false }))
-    if (activeWindow === id && nextActiveWindow) setActiveWindow(nextActiveWindow)
+    if (activeWindow === id) setActiveWindow(remainingWindows[0])
   }
   const updatePosition = (id: WindowId, position: Position) => setPositions((current) => ({ ...current, [id]: position }))
   const resetDesktop = () => {
