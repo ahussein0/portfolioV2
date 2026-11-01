@@ -4,7 +4,7 @@ import Image from "next/image"
 import { useEffect, useMemo, useState, type CSSProperties } from "react"
 import {
   BriefcaseBusiness, Code2, ExternalLink, FolderGit2, Github, GraduationCap,
-  House, Linkedin, Mail, MapPin, Maximize2, Sparkles, UserRound,
+  House, Linkedin, Mail, Maximize2, Sparkles, UserRound,
 } from "lucide-react"
 
 import { PortfolioWindow } from "@/components/portfolio-window"
@@ -93,7 +93,7 @@ export default function Home() {
       <div className="os-desktop">
         <PortfolioWindow id="home" title={windowMeta.home.title} icon={<House />} position={positions.home} zIndex={zIndexes.home} isOpen={openWindows.home} isActive={activeWindow === "home"} onFocus={() => focusWindow("home")} onClose={() => closeWindow("home")} onPositionChange={(position) => updatePosition("home", position)} className="os-window-home">
           <div className="os-hero">
-            <div className="os-hero-copy"><span className="os-eyebrow">Software engineer · Houston, TX</span><h1>Ideas in.<br /><span>Products out.</span></h1><p>I build useful software, experiment with AI agents, and turn ambitious ideas into products people enjoy using.</p><div className="os-hero-actions"><button type="button" className="os-primary-button" onClick={() => focusWindow("projects")}>Open projects <FolderGit2 aria-hidden="true" /></button><button type="button" className="os-secondary-button" onClick={() => focusWindow("contact")}>Let&apos;s talk <Mail aria-hidden="true" /></button></div></div>
+            <div className="os-hero-copy"><span className="os-eyebrow">Software engineer</span><h1>Ideas in.<br /><span>Products out.</span></h1><p>I build useful software, experiment with AI agents, and turn ambitious ideas into products people enjoy using.</p><div className="os-hero-actions"><button type="button" className="os-primary-button" onClick={() => focusWindow("projects")}>Open projects <FolderGit2 aria-hidden="true" /></button><button type="button" className="os-secondary-button" onClick={() => focusWindow("contact")}>Let&apos;s talk <Mail aria-hidden="true" /></button></div></div>
             <div className="os-profile-wrap"><Image src="/profile-image.jpg" alt="Anas Hussein hiking in the mountains" width={420} height={315} className="os-profile-image" priority /><span className="os-photo-note">weekend mode ↗</span></div>
           </div>
         </PortfolioWindow>
@@ -111,7 +111,7 @@ export default function Home() {
         </PortfolioWindow>
 
         <PortfolioWindow id="contact" title={windowMeta.contact.title} icon={<Mail />} position={positions.contact} zIndex={zIndexes.contact} isOpen={openWindows.contact} isActive={activeWindow === "contact"} onFocus={() => focusWindow("contact")} onClose={() => closeWindow("contact")} onPositionChange={(position) => updatePosition("contact", position)} className="os-window-contact">
-          <div className="os-contact"><span className="os-contact-status"><span /> Connection ready</span><h2>Let&apos;s build something interesting.</h2><p>Have a project, opportunity, or wonderfully weird idea? My inbox is open.</p><div className="os-contact-actions"><a href="mailto:anasmhussein000@gmail.com"><Mail aria-hidden="true" /> Email me</a><button type="button" onClick={copyEmail}>{emailCopied ? "Copied!" : "Copy email"}</button></div><div className="os-social-links"><a href="https://github.com/ahussein0" target="_blank" rel="noreferrer"><Github aria-hidden="true" /> GitHub</a><a href="https://www.linkedin.com/in/anas-hussein1/" target="_blank" rel="noreferrer"><Linkedin aria-hidden="true" /> LinkedIn</a><span><MapPin aria-hidden="true" /> Houston, TX</span></div></div>
+          <div className="os-contact"><span className="os-contact-status"><span /> Connection ready</span><h2>Let&apos;s build something interesting.</h2><p>Have a project or opportunity? My inbox is open.</p><div className="os-contact-actions"><a href="mailto:anasmhussein000@gmail.com"><Mail aria-hidden="true" /> Email me</a><button type="button" onClick={copyEmail}>{emailCopied ? "Copied!" : "Copy email"}</button></div><div className="os-social-links"><a href="https://github.com/ahussein0" target="_blank" rel="noreferrer"><Github aria-hidden="true" /> GitHub</a><a href="https://www.linkedin.com/in/anas-hussein1/" target="_blank" rel="noreferrer"><Linkedin aria-hidden="true" /> LinkedIn</a></div></div>
         </PortfolioWindow>
       </div>
 
