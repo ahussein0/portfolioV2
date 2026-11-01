@@ -433,9 +433,15 @@ body {
 .os-contact-actions a { background: var(--os-coral); color: #fff; }
 .os-contact-actions button { background: var(--os-paper); color: var(--os-ink); }
 .os-contact-actions svg { width: 14px; height: 14px; }
-.os-social-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px dashed color-mix(in srgb, var(--os-ink) 35%, transparent); }
-.os-social-links a, .os-social-links span { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; }
-.os-social-links svg { width: 13px; height: 13px; }
+.os-social-links { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; margin-top: 20px; padding-top: 24px; border-top: 1px dashed color-mix(in srgb, var(--os-ink) 35%, transparent); }
+.os-social-button { display: inline-flex; min-height: 38px; align-items: center; gap: 6px; border: 1.5px solid var(--os-ink); border-radius: 7px; padding: 8px 11px; font-size: 10px; font-weight: 750; box-shadow: 2px 2px 0 var(--os-ink); transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease; }
+.os-social-button.github { background: var(--os-ink); color: var(--os-paper); }
+.os-social-button.linkedin { background: color-mix(in srgb, var(--os-blue) 72%, var(--os-paper)); color: var(--os-ink); }
+.os-social-button:hover { transform: translate(-2px, -3px); box-shadow: 4px 5px 0 var(--os-ink); }
+.os-linkedin-link { position: relative; display: inline-flex; }
+.os-connect-note { position: absolute; left: 50%; bottom: calc(100% + 6px); display: inline-flex; align-items: center; gap: 3px; transform: translateX(-50%) rotate(-2deg); white-space: nowrap; color: var(--os-coral); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 9px; font-weight: 800; text-transform: uppercase; }
+.os-connect-note svg { width: 13px; height: 13px; }
+.os-social-button svg { width: 13px; height: 13px; }
 
 .os-dock { position: fixed; left: 50%; bottom: 17px; z-index: 120; display: flex; align-items: flex-end; gap: 7px; transform: translateX(-50%); border: 2px solid var(--os-ink); border-radius: 16px; background: color-mix(in srgb, var(--os-paper) 76%, transparent); padding: 8px; box-shadow: 5px 5px 0 var(--os-shadow); backdrop-filter: blur(14px); }
 .os-dock button { position: relative; display: flex; width: 52px; min-height: 52px; align-items: center; justify-content: center; border: 1.5px solid var(--os-ink); border-radius: 11px; background: var(--os-yellow); color: var(--os-ink); transition: transform 160ms ease, background 160ms ease; }

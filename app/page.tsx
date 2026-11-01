@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { useEffect, useMemo, useState, type CSSProperties } from "react"
 import {
-  BriefcaseBusiness, Code2, ExternalLink, FolderGit2, Github, GraduationCap,
+  ArrowDownRight, BriefcaseBusiness, Code2, ExternalLink, FolderGit2, Github, GraduationCap,
   House, Linkedin, Mail, Maximize2, Sparkles, UserRound,
 } from "lucide-react"
 
@@ -136,7 +136,7 @@ export default function Home() {
         </PortfolioWindow>
 
         <PortfolioWindow id="contact" title={windowMeta.contact.title} icon={<Mail />} position={positions.contact} zIndex={zIndexes.contact} isOpen={openWindows.contact} isActive={activeWindow === "contact"} stageIndex={stageIndex("contact")} onFocus={() => focusWindow("contact")} onClose={() => closeWindow("contact")} onPositionChange={(position) => updatePosition("contact", position)} className="os-window-contact">
-          <div className="os-contact"><span className="os-contact-status"><span /> Connection ready</span><p>Feel free to reach out always down to chat!</p><div className="os-contact-actions"><a href="mailto:anasmhussein000@gmail.com"><Mail aria-hidden="true" /> Email me</a><button type="button" onClick={copyEmail}>{emailCopied ? "Copied!" : "Copy email"}</button></div><div className="os-social-links"><a href="https://github.com/ahussein0" target="_blank" rel="noreferrer"><Github aria-hidden="true" /> GitHub</a><a href="https://www.linkedin.com/in/anas-hussein1/" target="_blank" rel="noreferrer"><Linkedin aria-hidden="true" /> LinkedIn</a></div></div>
+          <div className="os-contact"><span className="os-contact-status"><span /> Connection ready</span><p>Feel free to reach out always down to chat!</p><div className="os-contact-actions"><a href="mailto:anasmhussein000@gmail.com"><Mail aria-hidden="true" /> Email me</a><button type="button" onClick={copyEmail}>{emailCopied ? "Copied!" : "Copy email"}</button></div><div className="os-social-links"><a className="os-social-button github" href="https://github.com/ahussein0" target="_blank" rel="noreferrer"><Github aria-hidden="true" /> GitHub</a><div className="os-linkedin-link"><span className="os-connect-note">Let&apos;s connect <ArrowDownRight aria-hidden="true" /></span><a className="os-social-button linkedin" href="https://www.linkedin.com/in/anas-hussein1/" target="_blank" rel="noreferrer"><Linkedin aria-hidden="true" /> LinkedIn</a></div></div></div>
         </PortfolioWindow>
       </div>
 
